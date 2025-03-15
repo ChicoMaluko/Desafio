@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>
+  {{ data.tipo === "cliente" ? "Adicionar Cliente" : "Editar Cliente" }}
+</h1>
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Nome</mat-label>
+    <input matInput [(ngModel)]="cliente.nome" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="onSave()">Salvar</button>
+</mat-dialog-actions>

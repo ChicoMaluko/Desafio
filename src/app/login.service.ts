@@ -14,5 +14,5 @@ export class LoginService {
    public postLoginForm(username:string, password:string):
    Observable<any>{
     return this.httpClient.post(this.apiUrl+"auth/login",{"login":username, "senha": password})
-   }
+   };
 }

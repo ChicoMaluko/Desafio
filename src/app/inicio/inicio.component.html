@@ -1,0 +1,100 @@
+<mat-card class="card-container">
+  <!-- Seção de Clientes -->
+  <mat-card-header>
+    <mat-card-title>Clientes</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="crud-actions">
+      <button mat-raised-button color="primary" (click)="openClientDialog()">
+        Adicionar Cliente
+      </button>
+    </div>
+
+    <mat-table [dataSource]="clientes" matSort>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          ID
+        </mat-header-cell>
+        <mat-cell *matCellDef="let cliente">{{ cliente.id }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="nome">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Nome
+        </mat-header-cell>
+        <mat-cell *matCellDef="let cliente">{{ cliente.nome }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="acao">
+        <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+        <mat-cell *matCellDef="let cliente">
+          <button mat-icon-button (click)="editClient(cliente)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteClient(cliente.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="card-container">
+  <!-- Seção de Projetos -->
+  <mat-card-header>
+    <mat-card-title>Projetos</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="crud-actions">
+      <button mat-raised-button color="accent" (click)="openProjectDialog()">
+        Adicionar Projeto
+      </button>
+    </div>
+
+    <mat-table [dataSource]="projetos" matSort>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          ID
+        </mat-header-cell>
+        <mat-cell *matCellDef="let projeto">{{ projeto.id }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="nome">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Nome
+        </mat-header-cell>
+        <mat-cell *matCellDef="let projeto">{{ projeto.nome }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="cliente">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Cliente
+        </mat-header-cell>
+        <mat-cell *matCellDef="let projeto">{{
+          projeto.cliente.nome
+        }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="acao">
+        <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+        <mat-cell *matCellDef="let projeto">
+          <button mat-icon-button (click)="editProject(projeto)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteProject(projeto.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row
+        *matHeaderRowDef="displayedProjectColumns"
+      ></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedProjectColumns"></mat-row>
+    </mat-table>
+  </mat-card-content>
+</mat-card>

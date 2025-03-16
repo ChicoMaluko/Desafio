@@ -13,6 +13,7 @@ import {
 import { MatDialogActions } from '@angular/material/dialog';
 import { MatOption } from '@angular/material/core';
 import { MatFormField, MatLabel, MatSelect } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-project-dialog',
@@ -57,6 +58,7 @@ import { MatFormField, MatLabel, MatSelect } from '@angular/material/select';
     MatFormField,
     ReactiveFormsModule,
     MatDialogContent,
+    MatFormFieldModule,
   ],
 })
 export class ProjectDialogComponent {

@@ -4,9 +4,43 @@
 <mat-dialog-content>
   <mat-form-field appearance="fill">
     <mat-label>Nome</mat-label>
-    <mat-select></mat-select>
-    <mat-option></mat-option>
-    <input matInput [(ngModel)]="cliente.nome" />
+    <input matInput [formGroup]="cliente" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Cnpj</mat-label>
+    <input matInput formControlName="cnpj" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Razão Social</mat-label>
+    <input matInput formControlName="razaoSocial" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Endereço</mat-label>
+    <input matInput formControlName="endereco" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Quantidade de Produto</mat-label>
+    <input matInput formControlName="quantidadeProduto" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Quantidade de Pessoas</mat-label>
+    <input matInput formControlName="quantidadePessoas" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>UF</mat-label>
+    <input matInput formControlName="uf" /> </mat-form-field
+  ><mat-form-field appearance="fill">
+    <mat-label>CEP</mat-label>
+    <input matInput formControlName="cep" /> </mat-form-field
+  ><mat-form-field appearance="fill">
+    <mat-label>Cidade</mat-label>
+    <input matInput formControlName="cidade" />
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>

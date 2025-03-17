@@ -15,22 +15,4 @@ export class LoginService {
       senha: password,
     });
   }
-
-  public postCadastroForm(
-    username: string,
-    cnpj: number,
-    razaosocial: Text,
-    endereco: Text,
-    quantidadeprojeto: null,
-    quantidadepessoas: null
-  ): Observable<any> {
-    return this.httpClient.post(this.apiUrl + 'clientes', {
-      nome: username,
-      numero: cnpj,
-      razao: razaosocial,
-      local: endereco,
-      quantosprojetos: quantidadeprojeto,
-      quantaspessoas: quantidadepessoas,
-    });
-  }
 }

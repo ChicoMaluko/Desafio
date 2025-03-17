@@ -10,6 +10,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { ClientDialogComponent } from '../client-dialog/client-dialog.component';
 import { ProjectDialogComponent } from '../project-dialog/project-dialog.component';
+import { ClienteService } from '../cliente.service';
+import { ProjetoService } from '../projeto.service';
 
 @Component({
   selector: 'app-inicio',
@@ -34,26 +36,36 @@ export class InicioComponent {
     { id: 3, nome: 'Cliente C' },
   ];
 
-  projetos = [
-    { id: 1, nome: 'Projeto A', cliente: { id: 1, nome: 'Cliente A' } },
-    { id: 2, nome: 'Projeto B', cliente: { id: 2, nome: 'Cliente B' } },
-  ];
-
+  public projetos = [];
   // Definindo as colunas a serem exibidas nas tabelas
   displayedColumns: string[] = ['id', 'nome', 'acao'];
-  displayedProjectColumns: string[] = ['id', 'nome', 'cliente', 'acao'];
+  displayedProjectColumns: string[] = [
+    'id',
+    'nome',
+    'cliente',
+    'dataInicio',
+    'acao',
+  ];
 
   // DataSource para os projetos e clientes (material table)
   dataSourceClientes = new MatTableDataSource(this.clientes);
   dataSourceProjetos = new MatTableDataSource(this.projetos);
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private clienteService: ClienteService,
+    private projetoService: ProjetoService
+  ) {
+    this.projetoService.getProjetos().subscribe((ok) => {
+      this.projetos = ok.content;
+    });
+  }
 
   // Método para abrir o dialog de Adicionar Cliente
   openClientDialog(): void {
     const dialogRef = this.dialog.open(ClientDialogComponent, {
       width: '400px',
-      data: { tipo: 'cliente' },
+      data: { tipo: 'cliente', clienteService: this.clienteService },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -70,7 +82,11 @@ export class InicioComponent {
   openProjectDialog(): void {
     const dialogRef = this.dialog.open(ProjectDialogComponent, {
       width: '400px',
-      data: { tipo: 'projeto', clientes: this.clientes },
+      data: {
+        tipo: 'projeto',
+        clientes: this.clientes,
+        projetoService: this.projetoService,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
@@ -80,7 +96,7 @@ export class InicioComponent {
   editClient(cliente: any): void {
     const dialogRef = this.dialog.open(ClientDialogComponent, {
       width: '400px',
-      data: { tipo: 'cliente', cliente },
+      data: { tipo: 'cliente', cliente, clienteService: this.clienteService },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -116,10 +132,10 @@ export class InicioComponent {
 
   // Método para excluir um projeto
   deleteProject(id: number): void {
-    const index = this.projetos.findIndex((p) => p.id === id);
-    if (index !== -1) {
-      this.projetos.splice(index, 1);
-      this.dataSourceProjetos.data = [...this.projetos]; // Atualiza a tabela
-    }
+    this.projetoService.deleteProjeto(id).subscribe((ok) => {
+      this.projetoService
+        .getProjetos()
+        .subscribe((ok) => (this.projetos = ok.content));
+    });
   }
 }

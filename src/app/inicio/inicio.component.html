@@ -67,15 +67,22 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>
           Nome
         </mat-header-cell>
-        <mat-cell *matCellDef="let projeto">{{ projeto.nome }}</mat-cell>
+        <mat-cell *matCellDef="let projeto">{{ projeto.nomeProjeto }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="cliente">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Cliente
+          Status
+        </mat-header-cell>
+        <mat-cell *matCellDef="let projeto">{{ projeto.status }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="dataInicio">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Data Abertura
         </mat-header-cell>
         <mat-cell *matCellDef="let projeto">{{
-          projeto.cliente.nome
+          projeto.dataAbertura
         }}</mat-cell>
       </ng-container>
 

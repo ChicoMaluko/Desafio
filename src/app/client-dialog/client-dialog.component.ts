@@ -4,6 +4,7 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import {
@@ -16,6 +17,7 @@ import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatFormField, MatLabel, MatSelect } from '@angular/material/select';
 import { ClienteService } from '../cliente.service';
 import { ok } from 'assert';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-client-dialog',
@@ -27,21 +29,22 @@ import { ok } from 'assert';
     MatDialogContent,
     FormsModule,
     MatInputModule,
+    MatButtonModule
   ],
   templateUrl: './client-dialog.component.html',
   styleUrl: './client-dialog.component.scss',
 })
 export class ClientDialogComponent {
   public cliente = new FormGroup({
-    nome: new FormControl(''),
-    cep: new FormControl(''),
-    cidade: new FormControl(''),
-    uf: new FormControl(''),
-    cnpj: new FormControl(''),
-    razaoSocial: new FormControl(''),
-    endereco: new FormControl(''),
-    qunatidadeProjeto: new FormControl(''),
-    quantidadePessoa: new FormControl(''),
+    nome: new FormControl('', Validators.required),
+    cep: new FormControl('', Validators.required),
+    cidade: new FormControl('', Validators.required),
+    uf: new FormControl('', Validators.required),
+    cnpj: new FormControl('', Validators.required),
+    razaoSocial: new FormControl('', Validators.required),
+    endereco: new FormControl('', Validators.required),
+    quantidadeProjetos: new FormControl('', Validators.required),
+    quantidadePessoas: new FormControl('', Validators.required),
   });
 
   constructor(
@@ -55,8 +58,9 @@ export class ClientDialogComponent {
 
   onSave(): void {
     this.data.clienteService.postCadastroForm(this.cliente.value).subscribe(
-      () => {
-        console.log('foi');
+      (ok:any) => {
+        console.log(ok);
+        
         this.dialogRef.close(this.cliente);
       },
       () => {

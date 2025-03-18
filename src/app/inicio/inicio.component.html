@@ -10,21 +10,7 @@
       </button>
     </div>
 
-    <mat-table [dataSource]="clientes" matSort>
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          ID
-        </mat-header-cell>
-        <mat-cell *matCellDef="let cliente">{{ cliente.id }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="nome">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Nome
-        </mat-header-cell>
-        <mat-cell *matCellDef="let cliente">{{ cliente.nome }}</mat-cell>
-      </ng-container>
-
+    <mat-table [dataSource]="clientes" matSort>           
       <ng-container matColumnDef="acao">
         <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
         <mat-cell *matCellDef="let cliente">
@@ -36,6 +22,42 @@
           </button>
         </mat-cell>
       </ng-container>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          id
+        </mat-header-cell>
+        <mat-cell *matCellDef="let clientes">{{ clientes.id }}</mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="nome">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Nome
+        </mat-header-cell>
+        <mat-cell *matCellDef="let clientes">{{ clientes.nome }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="cnpj">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          CNPJ
+        </mat-header-cell>
+        <mat-cell *matCellDef="let clientes">{{ clientes.cnpj }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="endereco">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Endereço
+        </mat-header-cell>
+        <mat-cell *matCellDef="let clientes">{{ clientes.endereco }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="cidade">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Cidade
+        </mat-header-cell>
+        <mat-cell *matCellDef="let clientes">{{ clientes.cidade }}</mat-cell>
+      </ng-container>
+
+      
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

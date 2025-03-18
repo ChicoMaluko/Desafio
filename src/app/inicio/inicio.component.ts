@@ -30,15 +30,11 @@ import { ProjetoService } from '../projeto.service';
   styleUrl: './inicio.component.scss',
 })
 export class InicioComponent {
-  clientes = [
-    { id: 1, nome: 'Cliente A' },
-    { id: 2, nome: 'Cliente B' },
-    { id: 3, nome: 'Cliente C' },
-  ];
+  public clientes = [];
 
   public projetos = [];
   // Definindo as colunas a serem exibidas nas tabelas
-  displayedColumns: string[] = ['id', 'nome', 'acao'];
+  displayedColumns: string[] = ['nome', 'cidade', 'endereco', 'acao'];
   displayedProjectColumns: string[] = [
     'id',
     'nome',
@@ -54,26 +50,28 @@ export class InicioComponent {
   constructor(
     public dialog: MatDialog,
     private clienteService: ClienteService,
-    private projetoService: ProjetoService
+    private projetoService: ProjetoService,
+    
   ) {
     this.projetoService.getProjetos().subscribe((ok) => {
       this.projetos = ok.content;
     });
+    this.clienteService.getClientes().subscribe((ok) => {
+      this.clientes = ok.content;
+    });
   }
+
 
   // Método para abrir o dialog de Adicionar Cliente
   openClientDialog(): void {
     const dialogRef = this.dialog.open(ClientDialogComponent, {
-      width: '400px',
+      width: '1000px',
       data: { tipo: 'cliente', clienteService: this.clienteService },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Adiciona o cliente ao array
-        const newClient = { id: this.clientes.length + 1, nome: result.nome };
-        this.clientes.push(newClient);
-        this.dataSourceClientes.data = [...this.clientes]; // Atualiza a tabela
+        
       }
     });
   }
@@ -101,24 +99,14 @@ export class InicioComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Atualiza o cliente no array
-        const index = this.clientes.findIndex((c) => c.id === cliente.id);
-        if (index !== -1) {
-          this.clientes[index].nome = result.nome;
-          this.dataSourceClientes.data = [...this.clientes]; // Atualiza a tabela
-        }
+      
+       
       }
     });
   }
 
   // Método para excluir um cliente
-  deleteClient(id: number): void {
-    const index = this.clientes.findIndex((c) => c.id === id);
-    if (index !== -1) {
-      this.clientes.splice(index, 1);
-      this.dataSourceClientes.data = [...this.clientes]; // Atualiza a tabela
-    }
-  }
+  deleteClient(id: number): void {}
 
   // Método para editar um projeto
   editProject(projeto: any): void {

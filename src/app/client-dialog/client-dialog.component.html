@@ -2,9 +2,10 @@
   {{ data.tipo === "cliente" ? "Adicionar Cliente" : "Editar Cliente" }}
 </h1>
 <mat-dialog-content>
+  <form [formGroup]="cliente">
   <mat-form-field appearance="fill">
     <mat-label>Nome</mat-label>
-    <input matInput [formGroup]="cliente" />
+    <input matInput formControlName="nome" />
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -23,8 +24,8 @@
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>Quantidade de Produto</mat-label>
-    <input matInput formControlName="quantidadeProduto" />
+    <mat-label>Quantidade de Projetos</mat-label>
+    <input matInput formControlName="quantidadeProjetos" />
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -42,6 +43,7 @@
     <mat-label>Cidade</mat-label>
     <input matInput formControlName="cidade" />
   </mat-form-field>
+</form>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>

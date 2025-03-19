@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ClienteService {
-  public apiUrl = 'http://desafio.viaapia.com.br:8282/';
+  public apiUrl = 'http://desafio.viaapia.com.br:8282/clientes';
 
   constructor(private httpClient: HttpClient) {}
   public postCadastroForm(clienteForm: any): Observable<any> {
@@ -15,7 +15,7 @@ export class ClienteService {
       Authorization: 'Bearer ' + token,
     });
     return this.httpClient.post(
-      this.apiUrl + 'clientes',
+      this.apiUrl,
       {
         nome: clienteForm.nome,
         cnpj: clienteForm.cnpj,
@@ -30,13 +30,14 @@ export class ClienteService {
       { headers }
     );
   }
-  public getClientes(): Observable<any> {
+  public getClientes(size: number, page: number): Observable<any> {
     const token = localStorage.getItem('token');
     const headers: HttpHeaders = new HttpHeaders({
       Authorization: 'Bearer ' + token,
     });
-    return this.httpClient.get(this.apiUrl + 'clientes', {
+    return this.httpClient.get(this.apiUrl, {
       headers,
+      params: { size, page },
     });
   }
 }

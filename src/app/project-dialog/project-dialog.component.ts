@@ -27,6 +27,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         <mat-form-field appearance="fill">
           <mat-label>Nome do Projeto</mat-label>
           <input matInput formControlName="nome" required />
+        </mat-form-field>]
+
+        <mat-form-field appearance="fill">
+          <mat-label>Email do Projeto</mat-label>
+          <input matInput formControlName="email" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Data de Abertura</mat-label>
+          <input matInput formControlName="dataAbertura" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Status do Projeto</mat-label>
+          <input matInput formControlName="statusp" required />
         </mat-form-field>
 
         <!-- Campo Cliente Associado -->

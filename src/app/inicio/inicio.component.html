@@ -57,11 +57,15 @@
         <mat-cell *matCellDef="let clientes">{{ clientes.cidade }}</mat-cell>
       </ng-container>
 
-      
-
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
+    <mat-paginator (page)="clienteTableChangeEvent($event)" 
+    [pageSize]="clientePageSize" 
+    [pageIndex]="clientePage"
+    [length]="clienteLength"
+    [pageSizeOptions]="clientePageSizeOptions">
+    </mat-paginator>
   </mat-card-content>
 </mat-card>
 

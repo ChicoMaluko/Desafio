@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>
-  {{ data.tipo === "cliente" ? "Adicionar Cliente" : "Editar Cliente" }}
+  {{ data.cliente ? "Editar Cliente" : "Adicionar Cliente" }}
 </h1>
 <mat-dialog-content>
   <form [formGroup]="cliente">

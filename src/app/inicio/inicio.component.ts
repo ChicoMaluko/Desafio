@@ -12,7 +12,6 @@ import { ClientDialogComponent } from '../client-dialog/client-dialog.component'
 import { ProjectDialogComponent } from '../project-dialog/project-dialog.component';
 import { ClienteService } from '../cliente.service';
 import { ProjetoService } from '../projeto.service';
-
 @Component({
   selector: 'app-inicio',
   imports: [
@@ -25,6 +24,7 @@ import { ProjetoService } from '../projeto.service';
     MatDialogModule,
     MatPaginatorModule,
     MatSortModule,
+    MatPaginatorModule,
   ],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.scss',
@@ -33,6 +33,11 @@ export class InicioComponent {
   public clientes = [];
 
   public projetos = [];
+  public clientePageSize = 5;
+  public clientePage = 0;
+  public clienteLength = 0;
+  public clientePageSizeOptions = [5, 10, 15, 100];
+
   // Definindo as colunas a serem exibidas nas tabelas
   displayedColumns: string[] = ['nome', 'cidade', 'endereco', 'acao'];
   displayedProjectColumns: string[] = [
@@ -50,17 +55,28 @@ export class InicioComponent {
   constructor(
     public dialog: MatDialog,
     private clienteService: ClienteService,
-    private projetoService: ProjetoService,
-    
+    private projetoService: ProjetoService
   ) {
     this.projetoService.getProjetos().subscribe((ok) => {
       this.projetos = ok.content;
     });
-    this.clienteService.getClientes().subscribe((ok) => {
-      this.clientes = ok.content;
-    });
+    this.clienteService
+      .getClientes(this.clientePageSize, this.clientePage)
+      .subscribe((ok) => {
+        this.clienteLength = ok.totalElements;
+        this.clientes = ok.content;
+      });
   }
 
+  public clienteTableChangeEvent(event: any) {
+    this.clientePage = event.pageIndex;
+    this.clientePageSize = event.pageSize;
+    this.clienteService
+      .getClientes(this.clientePageSize, this.clientePage)
+      .subscribe((ok) => {
+        this.clientes = ok.content;
+      });
+  }
 
   // Método para abrir o dialog de Adicionar Cliente
   openClientDialog(): void {
@@ -71,7 +87,6 @@ export class InicioComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        
       }
     });
   }
@@ -93,14 +108,17 @@ export class InicioComponent {
   // Método para editar um cliente
   editClient(cliente: any): void {
     const dialogRef = this.dialog.open(ClientDialogComponent, {
-      width: '400px',
+      width: '1000px',
       data: { tipo: 'cliente', cliente, clienteService: this.clienteService },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-      
-       
+        this.clienteService
+          .getClientes(this.clientePageSize, this.clientePage)
+          .subscribe((ok) => {
+            this.clientes = ok.content;
+          });
       }
     });
   }

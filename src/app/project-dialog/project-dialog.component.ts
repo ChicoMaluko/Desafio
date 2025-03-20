@@ -9,89 +9,66 @@ import {
   FormBuilder,
   Validators,
   ReactiveFormsModule,
+  FormControl,
 } from '@angular/forms';
 import { MatDialogActions } from '@angular/material/dialog';
-import { MatOption } from '@angular/material/core';
-import { MatFormField, MatLabel, MatSelect } from '@angular/material/select';
+import { MatOption, MatOptionModule } from '@angular/material/core';
+import {
+  MatFormField,
+  MatLabel,
+  MatSelect,
+  MatSelectModule,
+} from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-project-dialog',
-  template: `
-    <h1 mat-dialog-title>
-      {{ data.tipo === 'projeto' ? 'Adicionar Projeto' : 'Editar Projeto' }}
-    </h1>
-    <mat-dialog-content>
-      <form [formGroup]="projectForm">
-        <!-- Campo Nome do Projeto -->
-        <mat-form-field appearance="fill">
-          <mat-label>Nome do Projeto</mat-label>
-          <input matInput formControlName="nome" required />
-        </mat-form-field>]
-
-        <mat-form-field appearance="fill">
-          <mat-label>Email do Projeto</mat-label>
-          <input matInput formControlName="email" required />
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Data de Abertura</mat-label>
-          <input matInput formControlName="dataAbertura" required />
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Status do Projeto</mat-label>
-          <input matInput formControlName="statusp" required />
-        </mat-form-field>
-
-        <!-- Campo Cliente Associado -->
-        <mat-form-field appearance="fill">
-          <mat-label>Cliente</mat-label>
-          <mat-select formControlName="clienteId" required>
-            <mat-option
-              *ngFor="let cliente of data.clientes"
-              [value]="cliente.id"
-            >
-              {{ cliente.nome }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </form>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-      <button mat-button (click)="onNoClick()">Cancelar</button>
-      <button mat-button (click)="onSave()" [disabled]="projectForm.invalid">
-        Salvar
-      </button>
-    </mat-dialog-actions>
-  `,
+  templateUrl: './project-dialog.component.html',
+  styleUrl: './project-dialog.component.scss',
   imports: [
     MatDialogActions,
-    MatOption,
-    MatSelect,
+    MatOptionModule,
+    MatSelectModule,
     MatLabel,
     MatFormField,
     ReactiveFormsModule,
     MatDialogContent,
     MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule,
+    CommonModule,
   ],
 })
 export class ProjectDialogComponent {
   // Formulário reativo para capturar os dados do projeto
-  projectForm: FormGroup;
+
+  public projeto = new FormGroup({
+    id: new FormControl('', Validators.required),
+    nomeProjeto: new FormControl('', Validators.required),
+    status: new FormControl('EM_ANDAMENTO', Validators.required),
+    dataAbertura: new FormControl('', Validators.required),
+    dataFechamento: new FormControl('', Validators.required),
+    dataPrevista: new FormControl('', Validators.required),
+  });
 
   constructor(
     public dialogRef: MatDialogRef<ProjectDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    // Inicialização do formulário
-    this.projectForm = this.fb.group({
-      nome: [data.projeto ? data.projeto.nome : '', [Validators.required]],
-      clienteId: [
-        data.projeto ? data.projeto.cliente.id : '',
-        [Validators.required],
-      ],
+    if (data.projeto) {
+      this.initProjectDialog();
+    }
+  }
+
+  public initProjectDialog() {
+    this.projeto.patchValue({
+      nomeProjeto: this.data.projeto.nomeProjeto,
+      id: this.data.projeto.id,
+      status: this.data.projeto.status,
+      dataAbertura: this.data.projeto.dataAbertura,
     });
   }
 
@@ -102,9 +79,15 @@ export class ProjectDialogComponent {
 
   // Método para salvar o projeto
   onSave(): void {
-    if (this.projectForm.valid) {
-      const result = this.projectForm.value;
-      this.dialogRef.close(result);
-    }
+    this.data.projetoService.postProjetos(this.projeto.value).subscribe(
+      (ok: any) => {
+        console.log(ok);
+
+        this.dialogRef.close(this.projeto);
+      },
+      () => {
+        console.log('erro');
+      }
+    );
   }
 }

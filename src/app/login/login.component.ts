@@ -5,6 +5,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ import { Router } from '@angular/router';
     MatCardContent,
     MatCardTitle,
     MatInputModule,
+    MatButtonModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

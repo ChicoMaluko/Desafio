@@ -37,6 +37,10 @@ export class InicioComponent {
   public clientePage = 0;
   public clienteLength = 0;
   public clientePageSizeOptions = [5, 10, 15, 100];
+  public projetoPageSize = 5;
+  public projetoPage = 0;
+  public projetoLength = 0;
+  public projetoPageSizeOptions = [5, 10, 15, 100];
 
   // Definindo as colunas a serem exibidas nas tabelas
   displayedColumns: string[] = ['nome', 'cidade', 'endereco', 'acao'];
@@ -57,9 +61,12 @@ export class InicioComponent {
     private clienteService: ClienteService,
     private projetoService: ProjetoService
   ) {
-    this.projetoService.getProjetos().subscribe((ok) => {
-      this.projetos = ok.content;
-    });
+    this.projetoService
+      .getProjetos(this.projetoPageSize, this.projetoPage)
+      .subscribe((ok) => {
+        this.projetoLength = ok.totalElements;
+        this.projetos = ok.content;
+      });
     this.clienteService
       .getClientes(this.clientePageSize, this.clientePage)
       .subscribe((ok) => {
@@ -77,12 +84,25 @@ export class InicioComponent {
         this.clientes = ok.content;
       });
   }
+  public projetoTableChangeEvent(event: any) {
+    this.projetoPage = event.pageIndex;
+    this.projetoPageSize = event.pageSize;
+    this.projetoService
+      .getProjetos(this.projetoPageSize, this.projetoPage)
+      .subscribe((ok) => {
+        this.projetos = ok.content;
+      });
+  }
 
   // Método para abrir o dialog de Adicionar Cliente
   openClientDialog(): void {
     const dialogRef = this.dialog.open(ClientDialogComponent, {
       width: '1000px',
-      data: { tipo: 'cliente', clienteService: this.clienteService },
+      data: {
+        tipo: 'cliente',
+        novoCliente: true,
+        clienteService: this.clienteService,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -94,7 +114,7 @@ export class InicioComponent {
   // Método para abrir o dialog de Adicionar Projeto
   openProjectDialog(): void {
     const dialogRef = this.dialog.open(ProjectDialogComponent, {
-      width: '400px',
+      width: '1000px',
       data: {
         tipo: 'projeto',
         clientes: this.clientes,
@@ -109,7 +129,12 @@ export class InicioComponent {
   editClient(cliente: any): void {
     const dialogRef = this.dialog.open(ClientDialogComponent, {
       width: '1000px',
-      data: { tipo: 'cliente', cliente, clienteService: this.clienteService },
+      data: {
+        tipo: 'cliente',
+
+        cliente,
+        clienteService: this.clienteService,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -124,13 +149,24 @@ export class InicioComponent {
   }
 
   // Método para excluir um cliente
-  deleteClient(id: number): void {}
+  deleteClient(id: number): void {
+    this.clienteService.deleteCliente(id).subscribe((ok) => {
+      this.clienteService
+        .getClientes(this.clientePageSize, this.clientePage)
+        .subscribe((ok) => (this.clientes = ok.content));
+    });
+  }
 
   // Método para editar um projeto
   editProject(projeto: any): void {
     const dialogRef = this.dialog.open(ProjectDialogComponent, {
-      width: '400px',
-      data: { tipo: 'projeto', projeto, clientes: this.clientes },
+      width: '1000px',
+      data: {
+        tipo: 'projeto',
+        projeto,
+        clientes: this.clientes,
+        projetoService: this.projetoService,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
@@ -140,7 +176,7 @@ export class InicioComponent {
   deleteProject(id: number): void {
     this.projetoService.deleteProjeto(id).subscribe((ok) => {
       this.projetoService
-        .getProjetos()
+        .getProjetos(this.projetoPageSize, this.projetoPage)
         .subscribe((ok) => (this.projetos = ok.content));
     });
   }

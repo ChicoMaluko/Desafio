@@ -1,1 +1,43 @@
-<p>project-dialog works!</p>
+<h1 mat-dialog-title>
+  {{ data.tipo === "projeto" ? "Adicionar Projeto" : "Editar Projeto" }}
+</h1>
+<mat-dialog-content>
+  <form [formGroup]="projeto">
+    <!-- Campo Nome do Projeto -->
+    <mat-form-field appearance="fill">
+      <mat-label>Nome do Projeto</mat-label>
+      <input matInput formControlName="nomeProjeto" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Data de Abertura</mat-label>
+      <input matInput type="date" formControlName="dataAbertura" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Data de Fechamento</mat-label>
+      <input matInput type="date" formControlName="dataFechamento" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Data de Prevista</mat-label>
+      <input matInput type="date" formControlName="dataPrevista" required />
+    </mat-form-field>
+
+    <!-- Campo Cliente Associado -->
+    <mat-form-field appearance="fill">
+      <mat-label>Cliente</mat-label>
+      <mat-select formControlName="id" required>
+        <mat-option *ngFor="let cliente of data.clientes" [value]="cliente.id">
+          {{ cliente.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="onSave()" [disabled]="projeto.invalid">
+    Salvar
+  </button>
+</mat-dialog-actions>

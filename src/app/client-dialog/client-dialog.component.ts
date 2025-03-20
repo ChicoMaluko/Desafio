@@ -45,7 +45,7 @@ export class ClientDialogComponent {
     endereco: new FormControl('', Validators.required),
     quantidadeProjetos: new FormControl('', Validators.required),
     quantidadePessoas: new FormControl('', Validators.required),
- });
+  });
   constructor(
     public dialogRef: MatDialogRef<ClientDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -67,51 +67,35 @@ export class ClientDialogComponent {
       quantidadeProjetos: this.data.cliente.quantidadeProjetos,
       quantidadePessoas: this.data.cliente.quantidadePessoas,
     });
- }
-}
-///aqui2
-export class ProjectDialogComponent {
-    public projeto = new FormGroup({
-      id: new FormControl('', Validators.required),
-     nomeProjeto: new FormControl('', Validators.required),
-      status: new FormControl('', Validators.required),
-      dataAbertura: new FormControl('', Validators.required),
-      
-    });
-  
-    constructor(
-      public dialogRef: MatDialogRef<ProjectDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: any
-    ) {
-      if (data.projeto) {
-        this.initProjectDialog();
-      }
-    }
-  
-    public initProjectDialog() {
-      this.projeto.patchValue({
-        nomeProjeto: this.data.projeto.nomeProjeto,
-        id: this.data.projeto.id,
-        status: this.data.projeto.status,
-        dataAbertura: this.data.projeto.dataAbertura,
-        
-      });
-    }
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   onSave(): void {
-    this.data.clienteService.postCadastroForm(this.projeto.value).subscribe(
-      (ok: any) => {
-        console.log(ok);
+    if (this.data.novoCliente) {
+      this.data.clienteService.postCadastroForm(this.cliente.value).subscribe(
+        (ok: any) => {
+          console.log(ok);
 
-        this.dialogRef.close(this.projeto);
-      },
-      () => {
-        console.log('erro');
-      }
-    );
+          this.dialogRef.close(this.cliente);
+        },
+        () => {
+          console.log('erro');
+        }
+      );
+    } else {
+      this.data.clienteService.putCadastroForm(this.cliente.value).subscribe(
+        (ok: any) => {
+          console.log(ok);
+
+          this.dialogRef.close(this.cliente);
+        },
+        () => {
+          console.log('erro');
+        }
+      );
+    }
   }
 }

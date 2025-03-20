@@ -3,49 +3,51 @@
 </h1>
 <mat-dialog-content>
   <form [formGroup]="cliente">
-  <mat-form-field appearance="fill">
-    <mat-label>Nome</mat-label>
-    <input matInput formControlName="nome" />
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" />
+    </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Cnpj</mat-label>
-    <input matInput formControlName="cnpj" />
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Cnpj</mat-label>
+      <input matInput formControlName="cnpj" />
+    </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Razão Social</mat-label>
-    <input matInput formControlName="razaoSocial" />
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Razão Social</mat-label>
+      <input matInput formControlName="razaoSocial" />
+    </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Endereço</mat-label>
-    <input matInput formControlName="endereco" />
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Endereço</mat-label>
+      <input matInput formControlName="endereco" />
+    </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Quantidade de Projetos</mat-label>
-    <input matInput formControlName="quantidadeProjetos" />
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Quantidade de Projetos</mat-label>
+      <input matInput formControlName="quantidadeProjetos" />
+    </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Quantidade de Pessoas</mat-label>
-    <input matInput formControlName="quantidadePessoas" />
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Quantidade de Pessoas</mat-label>
+      <input matInput formControlName="quantidadePessoas" />
+    </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>UF</mat-label>
-    <input matInput formControlName="uf" /> </mat-form-field
-  ><mat-form-field appearance="fill">
-    <mat-label>CEP</mat-label>
-    <input matInput formControlName="cep" /> </mat-form-field
-  ><mat-form-field appearance="fill">
-    <mat-label>Cidade</mat-label>
-    <input matInput formControlName="cidade" />
-  </mat-form-field>
-</form>
+    <mat-form-field appearance="fill">
+      <mat-label>UF</mat-label>
+      <input matInput formControlName="uf" /> </mat-form-field
+    ><mat-form-field appearance="fill">
+      <mat-label>CEP</mat-label>
+      <input matInput formControlName="cep" /> </mat-form-field
+    ><mat-form-field appearance="fill">
+      <mat-label>Cidade</mat-label>
+      <input matInput formControlName="cidade" />
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button (click)="onSave()">Salvar</button>
+  <button mat-button (click)="onSave()" [disabled]="cliente.invalid">
+    Salvar
+  </button>
 </mat-dialog-actions>

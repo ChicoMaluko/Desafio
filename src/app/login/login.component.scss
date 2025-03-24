@@ -1,41 +1,49 @@
 .login-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-control {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  .btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .btn:disabled {
-    background-color: #ccc;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #007bff, #b31b00);
+  justify-content: center;
+  align-items: center;
+}
 
-  
+.login-card {
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+mat-card-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+}
+
+mat-card-content {
+  text-align: justify;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #0056b3, #003d80);
+}

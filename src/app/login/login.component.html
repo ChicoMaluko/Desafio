@@ -1,11 +1,12 @@
 <div class="login-container">
+  <div class="logo-container"></div>
   <mat-card class="login-card">
     <mat-card-title class="text-center">Login</mat-card-title>
     <mat-card-content>
       <form (ngSubmit)="onLogin()" [formGroup]="loginForm">
         <mat-form-field appearance="fill">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="username" name="email" required />
+          <mat-label>Usuário</mat-label>
+          <input matInput formControlName="username" name="usuario" required />
         </mat-form-field>
 
         <mat-form-field appearance="fill">

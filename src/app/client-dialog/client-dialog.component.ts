@@ -45,6 +45,7 @@ export class ClientDialogComponent {
     endereco: new FormControl('', Validators.required),
     quantidadeProjetos: new FormControl('', Validators.required),
     quantidadePessoas: new FormControl('', Validators.required),
+    id: new FormControl(''),
   });
   constructor(
     public dialogRef: MatDialogRef<ClientDialogComponent>,
@@ -57,6 +58,7 @@ export class ClientDialogComponent {
 
   public initClientDialog() {
     this.cliente.patchValue({
+      id: this.data.cliente.id,
       nome: this.data.cliente.nome,
       cep: this.data.cliente.cep,
       cidade: this.data.cliente.cidade,

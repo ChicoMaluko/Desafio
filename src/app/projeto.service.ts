@@ -26,10 +26,22 @@ export class ProjetoService {
     });
     projeto.cliente = { id: projeto.id };
     projeto.id = null;
+    projeto.tecnico = { id: 1 };
     return this.httpclient.post(this.apiUrl + 'projetos', projeto, {
       headers,
     });
   }
+  public putCadastroForm(projetoForm: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers: HttpHeaders = new HttpHeaders({
+      Authorization: 'Bearer ' + token,
+    });
+    return this.httpclient.put(
+      this.apiUrl + `projetos/${projetoForm.id}`, projetoForm,
+      { headers }
+    );
+  }
+
   public deleteProjeto(id: number): Observable<any> {
     const token = localStorage.getItem('token');
     const headers: HttpHeaders = new HttpHeaders({

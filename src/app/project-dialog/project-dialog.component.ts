@@ -46,6 +46,7 @@ export class ProjectDialogComponent {
   // Formulário reativo para capturar os dados do projeto
 
   public projeto = new FormGroup({
+    tecnico: new FormControl(''),
     id: new FormControl('', Validators.required),
     nomeProjeto: new FormControl('', Validators.required),
     status: new FormControl('EM_ANDAMENTO', Validators.required),
@@ -65,10 +66,13 @@ export class ProjectDialogComponent {
 
   public initProjectDialog() {
     this.projeto.patchValue({
+      tecnico: this.data.projeto.tecnico,
       nomeProjeto: this.data.projeto.nomeProjeto,
       id: this.data.projeto.id,
       status: this.data.projeto.status,
       dataAbertura: this.data.projeto.dataAbertura,
+      dataFechamento: this.data.projeto.dataFechamento,
+      dataPrevista: this.data.projeto.dataPrevista,
     });
   }
 
@@ -79,7 +83,8 @@ export class ProjectDialogComponent {
 
   // Método para salvar o projeto
   onSave(): void {
-    this.data.projetoService.postProjetos(this.projeto.value).subscribe(
+    if(this.data.novoProjeto){
+      this.data.projetoService.postProjetos(this.projeto.value).subscribe(
       (ok: any) => {
         console.log(ok);
 
@@ -88,6 +93,18 @@ export class ProjectDialogComponent {
       () => {
         console.log('erro');
       }
-    );
-  }
+   );
+    } 
+  else{
+    this.data.projetoService.putCadastroForm(this.projeto.value).subscribe(
+      (ok: any) => {
+        console.log(ok);
+
+        this.dialogRef.close(this.projeto);
+      },
+      () => {
+        console.log('erro');
+      }
+   );
+  }}
 }

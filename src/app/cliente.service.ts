@@ -37,7 +37,7 @@ export class ClienteService {
       Authorization: 'Bearer ' + token,
     });
     return this.httpClient.put(
-      this.apiUrl,
+      this.apiUrl + `/${clienteForm.id}`,
       {
         nome: clienteForm.nome,
         cnpj: clienteForm.cnpj,

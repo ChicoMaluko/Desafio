@@ -116,6 +116,7 @@ export class InicioComponent {
     const dialogRef = this.dialog.open(ProjectDialogComponent, {
       width: '1000px',
       data: {
+        novoProjeto: true,
         tipo: 'projeto',
         clientes: this.clientes,
         projetoService: this.projetoService,
@@ -169,7 +170,11 @@ export class InicioComponent {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => {
+      this.projetoService
+        .getProjetos(this.projetoPageSize, this.projetoPage)
+        .subscribe((ok) => (this.projetos = ok.content));
+    });
   }
 
   // Método para excluir um projeto
